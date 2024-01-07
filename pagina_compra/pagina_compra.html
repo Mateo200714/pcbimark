@@ -1,0 +1,744 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PCbimark: Página de compra</title>
+    <link rel="shortcut icon" href="/recursos/logo.png">
+    <link rel="stylesheet" href="./pagina_compra.css">
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+</head>
+
+<body>
+    <header class="header-principal">
+        <div class="top"></div>
+        <div class="bottom"></div>
+        <!--titulo-->
+        <h1 class="titulo-pagina">Página de compra</h1>
+    </header>
+    <nav class="datos-producto-comprar">
+        <div class="img-mostrar-esconder">
+            <img id="img-mostrar-esconder-carrito" class="abierto" src="/recursos/flecha_pico_2.png"
+                alt="Mostrar esconder datos producto">
+        </div>
+        <div id="body-carrito" class="body">
+            
+        </div>
+    </nav>
+    <main id="datos-envio">
+        <h2 class="subtitulo-pagina">
+            <font>Detalles de envío</font><br>Esta información se utilizará únicamente con fines de envío.
+        </h2>
+        <form id="form-datos-envio" action="">
+            <label for="Pais-Region">
+                <span>País/Región</span>
+                <input type="text" name="Pais_Region" id="pais-region" value="" placeholder="..." required="required"
+                    autocomplete spellcheck="false" minlength="2" maxlength="50">
+                <span class="dato-invalido" id="dato-invalido-Pais-Region"><img draggable="false"
+                        src="/recursos/invalido.svg" alt="Información">Introduce un País/Región</span>
+            </label>
+            <label for="Nombre-Apellidos">
+                <span>Nombre y apellidos</span>
+                <input type="text" name="Nombre_Apellidos" id="nombre-apellidos" value="" placeholder="..."
+                    required="required" autocomplete spellcheck="false" maxlength="50" minlength="2">
+                <span class="dato-invalido" id="dato-invalido-nombre-apellidos"><img draggable="false"
+                        src="/recursos/invalido.svg" alt="Información">Introduce un nombre y apellido</span>
+            </label>
+            <label for="Numero-Telefono">
+                <span>Número de teléfono</span>
+                <input type="tel" name="Numero_Telefono" id="numero-telefono" value="" placeholder="+34 *** ** ** **"
+                    required="required" autocomplete spellcheck="false" maxlength="20" minlength="2">
+                <span class="informacion-dato">Se puede usar para ayudar con la entrega</span>
+                <span class="dato-invalido" id="dato-invalido-numero-telefono"><img draggable="false"
+                        src="/recursos/invalido.svg" alt="Información">Introduce un número de teléfono para que podamos
+                    llamar si hay algún problema
+                    con la entrega.</span>
+            </label>
+            <label for="Direccion-Entrega-1">
+                <span>Dirección de entrega</span>
+                <input type="text" name="Direccion_Entrega_1" id="Direccion-Entrega-1a" value=""
+                    placeholder="Nombre y número de la calle" required="required" autocomplete spellcheck="false"
+                    maxlength="60" minlength="2">
+                <input type="text" name="Direccion_Entrega_2" id="Direccion-Entrega-1b" value=""
+                    placeholder="Apartamento, suite, unidad, edificio o piso" autocomplete spellcheck="false"
+                    maxlength="60" minlength="2">
+                <span class="dato-invalido" id="dato-invalido-Direccion-Entrega-1a"><img draggable="false"
+                        src="/recursos/invalido.svg" alt="Información">Introduce una dirección.</span>
+            </label>
+            <label for="Codigo-Postal">
+                <span>Código postal</span>
+                <input type="text" name="Codigo_Postal" id="codigo-postal" value="" placeholder="..." maxlength="20"
+                    minlength="2" required="required" autocomplete spellcheck="false">
+                <span class="dato-invalido" id="dato-invalido-codigo-postal"><img draggable="false"
+                        src="/recursos/invalido.svg" alt="Información">Especifica un código postal.</span>
+            </label>
+            <label for="Ciudad">
+                <span>Ciudad</span>
+                <input type="text" name="Ciudad" id="ciudad" value="" required="required" placeholder="..." autocomplete
+                    spellcheck="false" maxlength="50" minlength="1">
+                <span class="dato-invalido" id="dato-invalido-ciudad"><img draggable="false"
+                        src="/recursos/invalido.svg" alt="Información">Introduce un nombre de ciudad.</span>
+            </label>
+            <label for="provincia">
+                <span id="titulo-provincia">Provincia/Región <font>(Opcional)</font></span>
+                <input type="text" name="Provincia" id="provincia" value="" placeholder="..." autocomplete
+                    spellcheck="false" maxlength="50" minlength="1">
+            </label>
+            <label for="NIF">
+                <span id="titulo-nif">NIF <font>(solo para las Islas Canarias, Ceuta y Melilla)</font><img
+                        draggable="false" src="/recursos/informacion.svg" alt="Información" id="informacion-nif">
+                </span>
+                <input type="text" name="NIF" id="nif" value="" placeholder="..." spellcheck="false" maxlength="20"
+                    minlength="1">
+                <span id="div-informacion-nif">
+                    <font>*</font>Para acelerar el proceso de despacho de aduanas, proporciona el número
+                    de identificación del destinatario de este pedido. Actualiza la dirección.
+                </span>
+            </label>
+            <div class="opciones-formulario">
+                <input type="button" id="bt-continuar-datos-envio" value="Continuar" disabled
+                    title="Rellene todos los datos">
+                <input type="button" id="bt-guardar-datos-envio" value="Guardar datos" disabled
+                    title="Rellene por lo menos 1 dato (recomendado)">
+                <input type="button" id="bt-instrucciones-entrega" value="Añadir instrucciones de entrega" disabled
+                    title="Añade más datos sobre la entrega">
+            </div>
+        </form>
+    </main>
+    <main id="instrucciones-envio">
+        <h2 class="subtitulo-pagina">
+            <font>Añadir instrucciones de entrega</font>
+        </h2>
+        <h3 id="nombre-cliente"></h3>
+        <h3 id="direccion-cliente"></h3>
+        <div class="div-tipos-propiedades">
+            <h3>Tipo de propiedad</h3>
+            <input type="button" value="Casa" class="bt-tipo-propiedades-activo"></input>
+            <input type="button" value="Apartamento"></input>
+            <input type="button" value="Negocio"></input>
+            <input type="button" value="Otro"></input>
+        </div>
+        <form action="">
+            <section id="section-tipo-propeidad-0">
+                <h4 class="titulo-formulario">Casa unifamiliar o casa adosada</h4>
+                <div class="pregunta">
+                    <div class="text-pregunta">
+                        <div><span>¿Dónde deberíamos dejar sus paquetes en esta dirección?</span></div>
+                        <div class="div-img">
+                            <img class="flecha-abrir-cerrar-pregunta-abierta" src="/recursos/flecha_pico.png"
+                                alt="Abrir Cerrar Pregunta" draggable="false">
+                        </div>
+                        <div class="dato-respuesta"></div>
+                    </div>
+                    <div class="respuestas-pregunta">
+                        <div class="div-lista-completa-opciones">
+                            <div class="div-lista-opcion-check">
+                                <label for="jardin">
+                                    <div><input type="radio" name="Donde_dejar_los_paquetes" id="jardin" value="Jardín">
+                                    </div><span>
+                                        Jardín</span>
+                                </label>
+                            </div>
+                            <div class="div-lista-opcion-check">
+                                <label for="puerta-casa">
+                                    <div><input type="radio" name="Donde_dejar_los_paquetes" id="puerta-casa"
+                                            value="En la puerta de la casa/felpudo"></div><span>En la puerta de la
+                                        casa/felpudo</span>
+                                </label>
+                            </div>
+                            <div class="div-lista-opcion-check">
+                                <label for="terraza">
+                                    <div><input type="radio" name="Donde_dejar_los_paquetes" id="terraza"
+                                            value="Terraza"></div><span>Terraza</span>
+                                </label>
+                            </div>
+                            <div class="div-lista-opcion-check">
+                                <label for="garaje">
+                                    <div><input type="radio" name="Donde_dejar_los_paquetes" value="Garaje" id="garaje">
+                                    </div><span>Garaje</span>
+                                </label>
+                            </div>
+                            <div class="div-lista-opcion-check">
+                                <label for="Cobertizo/Caseta">
+                                    <div><input type="radio" name="Donde_dejar_los_paquetes" value="cobertizo/caseta"
+                                            id="Cobertizo/Caseta"></div><span>Cobertizo/Caseta</span>
+                                </label>
+                            </div>
+                            <div class="div-lista-opcion-check">
+                                <label for="Vecino">
+                                    <div><input type="radio" name="Donde_dejar_los_paquetes" value="vecino" id="Vecino">
+                                    </div><span>Vecino</span>
+                                </label>
+                            </div>
+                            <div id="opciones-vecino" class="opciones-respuestas-pregunta">
+                                <input type="text" required autocomplete name="Nombre_vecino"
+                                    placeholder="Nombre del vecino" id="nombre-vecino" maxlength="20">
+                                <input required autocomplete maxlength="20" type="text" name="Numero_letra_casa"
+                                    value="" placeholder="Número y/o letra de la casa" id="numero-letra-casa">
+                                <div><img draggable="false" src="/recursos/informacion.svg" alt="Información"
+                                        id="informacion-vecino-casa"><span>Informa al vecino de que va a recibir la
+                                        entrega</span></div>
+                            </div>
+                            <div class="div-lista-opcion-check">
+                                <label for="Sin_preferencias">
+                                    <div><input type="radio" name="Donde_dejar_los_paquetes" value="Sin preferencias"
+                                            id="Sin_preferencias"></div><span>Sin preferencias</span>
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="pregunta">
+                    <div class="text-pregunta">
+                        <div><span>¿Necesitamos un código de seguridad, un número de llamada, o una
+                                clave para acceder a este edificio?</span></div>
+                        <div class="div-img">
+                            <img class="flecha-abrir-cerrar-pregunta-abierta" src="/recursos/flecha_pico.png"
+                                alt="Abrir Cerrar Pregunta" draggable="false">
+                        </div>
+                        <div class="dato-respuesta"></div>
+                    </div>
+                    <div class="respuestas-pregunta">
+                        <label for="codigo-seguridad-puerta">
+                            <span>Código de seguridad</span>
+                            <input type="text" name="Codigo_Seguridad_Puerta" id="codigo-seguridad-puerta" value=""
+                                placeholder="Código de seguridad para la puerta" spellcheck="false" maxlength="27">
+                        </label>
+                        <label for="telefonillo-numero-nombre">
+                            <span>Telefonillo</span>
+                            <input type="text" name="Telefonillo_Numero_Nombre" id="telefonillo-numero-nombre" value=""
+                                placeholder="Nombre o número de telefonillo" spellcheck="false" maxlength="27">
+                        </label>
+                        <label for="llave_requerida" class="respuesta-key-requeri">
+                            <div>
+                                <input type="checkbox" name="Llave_requerida" id="llave_requerida" spellcheck="false">
+                            </div>
+                            <span>
+                                Llave o llavero requerido para la entrega</span>
+                        </label>
+                    </div>
+                </div>
+                <div class="div-añadir-mas-instrucciones">
+                    <div>
+                        <span class="añadir-instrucciones">Agregar más instrucciones</span>
+                    </div>
+                    <div>
+                        <span class="text-añadir-instrucciones">Por ejemplo, instrucciones de navegación o
+                            disponibilidad de fin de semana.</span>
+                    </div>
+                </div>
+                <div class="pregunta cerrado-sabados-domingos" id="pregunta-adicional-1">
+                    <div class="text-pregunta">
+                        <div><span>¿Esta dirección está cerrada para entregas los sábados y
+                                domingos?</span></div>
+                        <div class="div-img">
+                            <img class="flecha-abrir-cerrar-pregunta-abierta" src="/recursos/flecha_pico.png"
+                                alt="Abrir Cerrar Pregunta" draggable="false">
+                        </div>
+                        <div class="dato-respuesta"></div>
+                    </div>
+                    <div class="respuestas-pregunta">
+                        <div>
+                            <h4>Sábados</h4>
+                            <input type="button" value="Cerrado" name="Cerrado_Sabados" id="cerrado-sabados"
+                                class="input-no-activado">
+                            <input type="button" value="Cerrado" name="Cerrado_Sabados" id="abierto-sabados"
+                                class="input-no-activado">
+                        </div>
+                        <div>
+                            <h4>Domingos</h4>
+                            <input type="button" value="Cerrado" name="Cerrado_Domingos" id="cerrado-domingos"
+                                class="input-no-activado">
+                            <input type="button" value="Cerrado" name="Cerrado_Domingos" id="abierto-domingos"
+                                class="input-no-activado">
+                        </div>
+                    </div>
+                </div>
+                <div class="pregunta" id="pregunta-adicional-2">
+                    <div class="text-pregunta">
+                        <div><span>¿Necesitamos instrucciones adicionales para encontrar esta
+                                dirección?</span></div>
+                        <div class="div-img">
+                            <img class="flecha-abrir-cerrar-pregunta-abierta" src="/recursos/flecha_pico.png"
+                                alt="Abrir Cerrar Pregunta" draggable="false">
+                        </div>
+                        <div class="dato-respuesta"></div>
+                    </div>
+                    <div class="respuestas-pregunta">
+                        <textarea name="" id="" cols="30" rows="3" spellcheck="true"
+                            placeholder="Proporciona detalles, como la descripción del edificio o un punto de referencia cercano."
+                            maxlength="255"></textarea>
+                    </div>
+                </div>
+            </section>
+            <section id="section-tipo-propeidad-1">
+                <h4 class="titulo-formulario">Edificio multirresidencial</h4>
+                <div class="pregunta">
+                    <div class="text-pregunta">
+                        <div><span>¿Necesitamos un código de seguridad, un número de llamada, o una
+                                clave para acceder a este edificio?</span></div>
+                        <div class="div-img">
+                            <img class="flecha-abrir-cerrar-pregunta-abierta" src="/recursos/flecha_pico.png"
+                                alt="Abrir Cerrar Pregunta" draggable="false">
+                        </div>
+                        <div class="dato-respuesta"></div>
+                    </div>
+                    <div class="respuestas-pregunta">
+                        <label for="codigo-seguridad-puerta">
+                            <span>Código de seguridad</span>
+                            <input type="text" name="Codigo_Seguridad_Puerta" id="codigo-seguridad-puerta" value=""
+                                placeholder="Código de seguridad para la puerta" spellcheck="false" maxlength="27">
+                        </label>
+                        <label for="telefonillo-numero-nombre">
+                            <span>Telefonillo</span>
+                            <input type="text" name="Telefonillo_Numero_Nombre" id="telefonillo-numero-nombre" value=""
+                                placeholder="Nombre o número de telefonillo" spellcheck="false" maxlength="27">
+                        </label>
+                        <label for="llave_requerida" class="respuesta-key-requeri">
+                            <div>
+                                <input type="checkbox" name="Llave_requerida" id="llave_requerida" spellcheck="false">
+                            </div>
+                            <span>
+                                Llave o llavero requerido para la entrega</span>
+                        </label>
+                    </div>
+                </div>
+                <div class="pregunta">
+                    <div class="text-pregunta">
+                        <div><span>¿Dónde deberíamos dejar sus paquetes en esta dirección?</span></div>
+                        <div class="div-img">
+                            <img class="flecha-abrir-cerrar-pregunta-abierta" src="/recursos/flecha_pico.png"
+                                alt="Abrir Cerrar Pregunta" draggable="false">
+                        </div>
+                        <div class="dato-respuesta"></div>
+                    </div>
+                    <div class="respuestas-pregunta">
+                        <div class="div-lista-completa-opciones">
+                            <div class="div-lista-opcion-check">
+                                <label for="jardin">
+                                    <div><input type="radio" name="Donde_dejar_los_paquetes" id="jardin" value="Jardín">
+                                    </div><span>
+                                        Jardín</span>
+                                </label>
+                            </div>
+                            <div class="div-lista-opcion-check">
+                                <label for="puerta-casa">
+                                    <div><input type="radio" name="Donde_dejar_los_paquetes" id="puerta-casa"
+                                            value="En la puerta de la casa/felpudo"></div><span>En la puerta de la
+                                        casa/felpudo</span>
+                                </label>
+                            </div>
+                            <div class="div-lista-opcion-check">
+                                <label for="terraza">
+                                    <div><input type="radio" name="Donde_dejar_los_paquetes" id="terraza"
+                                            value="Terraza"></div><span>Terraza</span>
+                                </label>
+                            </div>
+                            <div class="div-lista-opcion-check">
+                                <label for="garaje">
+                                    <div><input type="radio" name="Donde_dejar_los_paquetes" value="Garaje" id="garaje">
+                                    </div><span>Garaje</span>
+                                </label>
+                            </div>
+                            <div class="div-lista-opcion-check">
+                                <label for="Cobertizo/Caseta">
+                                    <div><input type="radio" name="Donde_dejar_los_paquetes" value="cobertizo/caseta"
+                                            id="Cobertizo/Caseta"></div><span>Cobertizo/Caseta</span>
+                                </label>
+                            </div>
+                            <div class="div-lista-opcion-check">
+                                <label for="Vecino">
+                                    <div><input type="radio" name="Donde_dejar_los_paquetes" value="vecino" id="Vecino">
+                                    </div><span>Vecino</span>
+                                </label>
+                            </div>
+                            <div id="opciones-vecino" class="opciones-respuestas-pregunta">
+                                <input type="text" required autocomplete name="Nombre_vecino"
+                                    placeholder="Nombre del vecino" id="nombre-vecino" maxlength="20">
+                                <input required autocomplete maxlength="20" type="text" name="Numero_letra_casa"
+                                    value="" placeholder="Número y/o letra de la casa" id="numero-letra-casa">
+                                <div><img draggable="false" src="/recursos/informacion.svg" alt="Información"
+                                        id="informacion-vecino-casa"><span>Informa al vecino de que va a recibir la
+                                        entrega</span></div>
+                            </div>
+                            <div class="div-lista-opcion-check">
+                                <label for="Sin_preferencias">
+                                    <div><input type="radio" name="Donde_dejar_los_paquetes" value="Sin preferencias"
+                                            id="Sin_preferencias"></div><span>Sin preferencias</span>
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="div-añadir-mas-instrucciones">
+                    <div>
+                        <span class="añadir-instrucciones">Agregar más instrucciones</span>
+                    </div>
+                    <div>
+                        <span class="text-añadir-instrucciones">Por ejemplo, instrucciones de navegación o
+                            disponibilidad de fin de semana.</span>
+                    </div>
+                </div>
+                <div class="pregunta cerrado-sabados-domingos" id="pregunta-adicional-1">
+                    <div class="text-pregunta">
+                        <div><span>¿Esta dirección está cerrada para entregas los sábados y
+                                domingos?</span></div>
+                        <div class="div-img">
+                            <img class="flecha-abrir-cerrar-pregunta-abierta" src="/recursos/flecha_pico.png"
+                                alt="Abrir Cerrar Pregunta" draggable="false">
+                        </div>
+                        <div class="dato-respuesta"></div>
+                    </div>
+                    <div class="respuestas-pregunta">
+                        <div>
+                            <h4>Sábados</h4>
+                            <input type="button" value="Cerrado" name="Cerrado_Sabados" id="cerrado-sabados"
+                                class="input-no-activado">
+                            <input type="button" value="Cerrado" name="Cerrado_Sabados" id="abierto-sabados"
+                                class="input-no-activado">
+                        </div>
+                        <div>
+                            <h4>Domingos</h4>
+                            <input type="button" value="Cerrado" name="Cerrado_Domingos" id="cerrado-domingos"
+                                class="input-no-activado">
+                            <input type="button" value="Cerrado" name="Cerrado_Domingos" id="abierto-domingos"
+                                class="input-no-activado">
+                        </div>
+                    </div>
+                </div>
+                <div class="pregunta" id="pregunta-adicional-2">
+                    <div class="text-pregunta">
+                        <div><span>¿Necesitamos instrucciones adicionales para encontrar esta
+                                dirección?</span></div>
+                        <div class="div-img">
+                            <img class="flecha-abrir-cerrar-pregunta-abierta" src="/recursos/flecha_pico.png"
+                                alt="Abrir Cerrar Pregunta" draggable="false">
+                        </div>
+                        <div class="dato-respuesta"></div>
+                    </div>
+                    <div class="respuestas-pregunta">
+                        <textarea name="" id="" cols="30" rows="3" spellcheck="true"
+                            placeholder="Proporciona detalles, como la descripción del edificio o un punto de referencia cercano."
+                            maxlength="255"></textarea>
+                    </div>
+                </div>
+            </section>
+            <section id="section-tipo-propeidad-2">
+                <h4 class="titulo-formulario">Oficina, Tienda, Hotel, Hospital, etc.</h4>
+                <div class="pregunta">
+                    <div class="text-pregunta">
+                        <div><span>¿Cuándo está abierta esta dirección para entregas?</span></div>
+                        <div class="div-img">
+                            <img class="flecha-abrir-cerrar-pregunta-abierta" src="/recursos/flecha_pico.png"
+                                alt="Abrir Cerrar Pregunta" draggable="false">
+                        </div>
+                        <div class="dato-respuesta"></div>
+                    </div>
+                    <div class="respuestas-pregunta">
+
+                    </div>
+                </div>
+                <div class="pregunta">
+                    <div class="text-pregunta">
+                        <div><span>¿Dónde deberíamos dejar sus paquetes en esta dirección?</span></div>
+                        <div class="div-img">
+                            <img class="flecha-abrir-cerrar-pregunta-abierta" src="/recursos/flecha_pico.png"
+                                alt="Abrir Cerrar Pregunta" draggable="false">
+                        </div>
+                        <div class="dato-respuesta"></div>
+                    </div>
+                    <div class="respuestas-pregunta">
+                        <div class="div-lista-completa-opciones">
+                            <div class="div-lista-opcion-check">
+                                <label for="jardin">
+                                    <div><input type="radio" name="Donde_dejar_los_paquetes" id="jardin" value="Jardín">
+                                    </div><span>
+                                        Jardín</span>
+                                </label>
+                            </div>
+                            <div class="div-lista-opcion-check">
+                                <label for="puerta-casa">
+                                    <div><input type="radio" name="Donde_dejar_los_paquetes" id="puerta-casa"
+                                            value="En la puerta de la casa/felpudo"></div><span>En la puerta de
+                                        la
+                                        casa/felpudo</span>
+                                </label>
+                            </div>
+                            <div class="div-lista-opcion-check">
+                                <label for="terraza">
+                                    <div><input type="radio" name="Donde_dejar_los_paquetes" id="terraza"
+                                            value="Terraza"></div><span>Terraza</span>
+                                </label>
+                            </div>
+                            <div class="div-lista-opcion-check">
+                                <label for="garaje">
+                                    <div><input type="radio" name="Donde_dejar_los_paquetes" value="Garaje" id="garaje">
+                                    </div><span>Garaje</span>
+                                </label>
+                            </div>
+                            <div class="div-lista-opcion-check">
+                                <label for="Cobertizo/Caseta">
+                                    <div><input type="radio" name="Donde_dejar_los_paquetes" value="cobertizo/caseta"
+                                            id="Cobertizo/Caseta"></div>
+                                    <span>Cobertizo/Caseta</span>
+                                </label>
+                            </div>
+                            <div class="div-lista-opcion-check">
+                                <label for="Vecino">
+                                    <div><input type="radio" name="Donde_dejar_los_paquetes" value="vecino" id="Vecino">
+                                    </div><span>Vecino</span>
+                                </label>
+                            </div>
+                            <div id="opciones-vecino" class="opciones-respuestas-pregunta">
+                                <input type="text" required autocomplete name="Nombre_vecino"
+                                    placeholder="Nombre del vecino" id="nombre-vecino" maxlength="20">
+                                <input required autocomplete maxlength="20" type="text" name="Numero_letra_casa"
+                                    value="" placeholder="Número y/o letra de la casa" id="numero-letra-casa">
+                                <div><img draggable="false" src="/recursos/informacion.svg" alt="Información"
+                                        id="informacion-vecino-casa"><span>Informa al vecino de que va a recibir
+                                        la
+                                        entrega</span></div>
+                            </div>
+                            <div class="div-lista-opcion-check">
+                                <label for="Sin_preferencias">
+                                    <div><input type="radio" name="Donde_dejar_los_paquetes" value="Sin preferencias"
+                                            id="Sin_preferencias"></div><span>Sin
+                                        preferencias</span>
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="div-añadir-mas-instrucciones">
+                    <div>
+                        <span class="añadir-instrucciones">Agregar más instrucciones</span>
+                    </div>
+                    <div>
+                        <span class="text-añadir-instrucciones">Por ejemplo, instrucciones de navegación o
+                            disponibilidad de fin de semana.</span>
+                    </div>
+                </div>
+                <div class="pregunta" id="pregunta-adicional-1">
+                    <div class="text-pregunta">
+                        <div><span>¿Necesitamos un código de seguridad, un número de llamada, o una
+                                clave para acceder a este edificio?</span></div>
+                        <div class="div-img">
+                            <img class="flecha-abrir-cerrar-pregunta-abierta" src="/recursos/flecha_pico.png"
+                                alt="Abrir Cerrar Pregunta" draggable="false">
+                        </div>
+                        <div class="dato-respuesta"></div>
+                    </div>
+                    <div class="respuestas-pregunta">
+                        <label for="codigo-seguridad-puerta">
+                            <span>Código de seguridad</span>
+                            <input type="text" name="Codigo_Seguridad_Puerta" id="codigo-seguridad-puerta" value=""
+                                placeholder="Código de seguridad para la puerta" spellcheck="false" maxlength="27">
+                        </label>
+                        <label for="telefonillo-numero-nombre">
+                            <span>Telefonillo</span>
+                            <input type="text" name="Telefonillo_Numero_Nombre" id="telefonillo-numero-nombre" value=""
+                                placeholder="Nombre o número de telefonillo" spellcheck="false" maxlength="27">
+                        </label>
+                        <label for="llave_requerida" class="respuesta-key-requeri">
+                            <div>
+                                <input type="checkbox" name="Llave_requerida" id="llave_requerida" spellcheck="false">
+                            </div>
+                            <span>
+                                Llave o llavero requerido para la entrega</span>
+                        </label>
+                    </div>
+                </div>
+                <div class="pregunta" id="pregunta-adicional-2">
+                    <div class="text-pregunta">
+                        <div><span>¿Necesitamos instrucciones adicionales para encontrar esta
+                                dirección?</span></div>
+                        <div class="div-img">
+                            <img class="flecha-abrir-cerrar-pregunta-abierta" src="/recursos/flecha_pico.png"
+                                alt="Abrir Cerrar Pregunta" draggable="false">
+                        </div>
+                        <div class="dato-respuesta"></div>
+                    </div>
+                    <div class="respuestas-pregunta">
+                        <textarea name="" id="" cols="30" rows="3" spellcheck="true"
+                            placeholder="Proporciona detalles, como la descripción del edificio o un punto de referencia cercano."
+                            maxlength="255"></textarea>
+                    </div>
+                </div>
+            </section>
+            <section id="section-tipo-propeidad-3">
+                <h4 class="titulo-formulario"></h4>
+                <div class="pregunta">
+                    <div class="text-pregunta">
+                        <div><span>¿Dónde deberíamos dejar sus paquetes en esta dirección?</span></div>
+                        <div class="div-img">
+                            <img class="flecha-abrir-cerrar-pregunta-abierta" src="/recursos/flecha_pico.png"
+                                alt="Abrir Cerrar Pregunta" draggable="false">
+                        </div>
+                        <div class="dato-respuesta"></div>
+                    </div>
+                    <div class="respuestas-pregunta">
+                        <div class="div-lista-completa-opciones">
+                            <div class="div-lista-opcion-check">
+                                <label for="jardin">
+                                    <div><input type="radio" name="Donde_dejar_los_paquetes" id="jardin" value="Jardín">
+                                    </div><span>
+                                        Jardín</span>
+                                </label>
+                            </div>
+                            <div class="div-lista-opcion-check">
+                                <label for="puerta-casa">
+                                    <div><input type="radio" name="Donde_dejar_los_paquetes" id="puerta-casa"
+                                            value="En la puerta de la casa/felpudo"></div><span>En la puerta de
+                                        la
+                                        casa/felpudo</span>
+                                </label>
+                            </div>
+                            <div class="div-lista-opcion-check">
+                                <label for="terraza">
+                                    <div><input type="radio" name="Donde_dejar_los_paquetes" id="terraza"
+                                            value="Terraza"></div><span>Terraza</span>
+                                </label>
+                            </div>
+                            <div class="div-lista-opcion-check">
+                                <label for="garaje">
+                                    <div><input type="radio" name="Donde_dejar_los_paquetes" value="Garaje" id="garaje">
+                                    </div><span>Garaje</span>
+                                </label>
+                            </div>
+                            <div class="div-lista-opcion-check">
+                                <label for="Cobertizo/Caseta">
+                                    <div><input type="radio" name="Donde_dejar_los_paquetes" value="cobertizo/caseta"
+                                            id="Cobertizo/Caseta"></div>
+                                    <span>Cobertizo/Caseta</span>
+                                </label>
+                            </div>
+                            <div class="div-lista-opcion-check">
+                                <label for="Vecino">
+                                    <div><input type="radio" name="Donde_dejar_los_paquetes" value="vecino" id="Vecino">
+                                    </div><span>Vecino</span>
+                                </label>
+                            </div>
+                            <div id="opciones-vecino" class="opciones-respuestas-pregunta">
+                                <input type="text" required autocomplete name="Nombre_vecino"
+                                    placeholder="Nombre del vecino" id="nombre-vecino" maxlength="20">
+                                <input required autocomplete maxlength="20" type="text" name="Numero_letra_casa"
+                                    value="" placeholder="Número y/o letra de la casa" id="numero-letra-casa">
+                                <div><img draggable="false" src="/recursos/informacion.svg" alt="Información"
+                                        id="informacion-vecino-casa"><span>Informa al vecino de que va a recibir
+                                        la
+                                        entrega</span></div>
+                            </div>
+                            <div class="div-lista-opcion-check">
+                                <label for="Sin_preferencias">
+                                    <div><input type="radio" name="Donde_dejar_los_paquetes" value="Sin preferencias"
+                                            id="Sin_preferencias"></div><span>Sin
+                                        preferencias</span>
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="pregunta">
+                    <div class="text-pregunta">
+                        <div><span>¿Cuándo está abierta esta dirección para entregas?</span></div>
+                        <div class="div-img">
+                            <img class="flecha-abrir-cerrar-pregunta-abierta" src="/recursos/flecha_pico.png"
+                                alt="Abrir Cerrar Pregunta" draggable="false">
+                        </div>
+                        <div class="dato-respuesta"></div>
+                    </div>
+                    <div class="respuestas-pregunta">
+
+                    </div>
+                </div>
+                <div class="div-añadir-mas-instrucciones">
+                    <div>
+                        <span class="añadir-instrucciones">Agregar más instrucciones</span>
+                    </div>
+                    <div>
+                        <span class="text-añadir-instrucciones">Por ejemplo, instrucciones de navegación o
+                            disponibilidad de fin de semana.</span>
+                    </div>
+                </div>
+                <div class="pregunta" id="pregunta-adicional-1">
+                    <div class="text-pregunta">
+                        <div><span>¿Necesitamos un código de seguridad, un número de llamada, o una
+                                clave para acceder a este edificio?</span></div>
+                        <div class="div-img">
+                            <img class="flecha-abrir-cerrar-pregunta-abierta" src="/recursos/flecha_pico.png"
+                                alt="Abrir Cerrar Pregunta" draggable="false">
+                        </div>
+                        <div class="dato-respuesta"></div>
+                    </div>
+                    <div class="respuestas-pregunta">
+                        <label for="codigo-seguridad-puerta">
+                            <span>Código de seguridad</span>
+                            <input type="text" name="Codigo_Seguridad_Puerta" id="codigo-seguridad-puerta" value=""
+                                placeholder="Código de seguridad para la puerta" spellcheck="false" maxlength="27">
+                        </label>
+                        <label for="telefonillo-numero-nombre">
+                            <span>Telefonillo</span>
+                            <input type="text" name="Telefonillo_Numero_Nombre" id="telefonillo-numero-nombre" value=""
+                                placeholder="Nombre o número de telefonillo" spellcheck="false" maxlength="27">
+                        </label>
+                        <label for="llave_requerida" class="respuesta-key-requeri">
+                            <div>
+                                <input type="checkbox" name="Llave_requerida" id="llave_requerida" spellcheck="false">
+                            </div>
+                            <span>
+                                Llave o llavero requerido para la entrega</span>
+                        </label>
+                    </div>
+                </div>
+                <div class="pregunta" id="pregunta-adicional-2">
+                    <div class="text-pregunta">
+                        <div><span>¿Necesitamos instrucciones adicionales para encontrar esta
+                                dirección?</span></div>
+                        <div class="div-img">
+                            <img class="flecha-abrir-cerrar-pregunta-abierta" src="/recursos/flecha_pico.png"
+                                alt="Abrir Cerrar Pregunta" draggable="false">
+                        </div>
+                        <div class="dato-respuesta"></div>
+                    </div>
+                    <div class="respuestas-pregunta">
+                        <textarea name="" id="" cols="30" rows="3" spellcheck="true"
+                            placeholder="Proporciona detalles, como la descripción del edificio o un punto de referencia cercano."
+                            maxlength="255"></textarea>
+                    </div>
+                </div>
+            </section>
+            <div class="text-informarcion-formulario">
+                <span>
+                    Tus instrucciones nos ayudan a realizar entregas en esta dirección . Sin embargo, es posible que las
+                    entregas no sigan siempre todas las instrucciones.
+                </span>
+            </div>
+            <div class="opciones-formulario">
+                <input type="button" id="bt-guardar-instrucciones-entrega" value="Guardar instrucciones de entrega"
+                    disabled title="Guarda las instrucciones de entrega">
+            </div>
+        </form>
+    </main>
+    <main id="metodos-pago">
+
+    </main>
+    <script>
+        let timeout_s;
+        document.getElementById("informacion-nif").addEventListener("mouseover", () => {
+            clearTimeout(timeout_s)
+            document.getElementById("div-informacion-nif").style.display = "block"
+        })
+        document.getElementById("informacion-nif").addEventListener("mouseout", () => {
+            clearTimeout(timeout_s)
+            timeout_s = setTimeout(() => {
+                document.getElementById("div-informacion-nif").style.display = "none"
+            }, 2250)
+
+        })
+    </script>
+    <script src="./servidor.js"></script>
+    <script src="./pagina_compra.js"></script>
+</body>
+
+</html>
